@@ -13,7 +13,11 @@ router.get("/:id", async (req, res, _next) => {
 
     try {
         const r = await CollectionService.getById(id);
-        res.status(200).json(r);
+        if (r !== null) {
+            res.status(200).json(r);
+        } else {
+            res.status(404).json();
+        }
     } catch (err) {
         console.error(err);
         res.status(400).send();
