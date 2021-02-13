@@ -2,11 +2,11 @@ version: '3.8'
 
 services:
   backend:
-    build: .
+    build: ./be
     ports:
       - "3000:3000"
     volumes:
-      - "./src:/usr/app/src"
+      - "./be/src:/usr/app/src"
       
   mongodb:
     image: mongo:latest
@@ -16,6 +16,13 @@ services:
       - 27017:27017
     volumes:
       - mongodb_data_container:/data/db
-      
+  
+  frontend:
+    build: ./fe
+    ports:
+      - "8080:3000"
+    volumes:
+      - "./fe/src:/usr/app/src"
+      - "./fe/public:/usr/app/public"
 volumes:
   mongodb_data_container:
