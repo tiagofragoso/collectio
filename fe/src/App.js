@@ -1,11 +1,9 @@
-import './App.css';
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      API_URL is {process.env.REACT_APP_API_URL}
-    </div>
-  );
-}
+import AppRouter from "./AppRouter";
+
+const App = () => (
+  <AppRouter />
+)
 
 export default App;

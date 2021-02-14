@@ -49,4 +49,15 @@ router.put("/:id", async (req, res, _next) => {
     }
 });
 
+// debug route
+router.get("/", async (req, res, _next) => {
+    try {
+        const r = await CollectionService.getAll();
+        res.status(200).json(r);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send();
+    }
+});
+
 module.exports = router;

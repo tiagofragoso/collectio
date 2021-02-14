@@ -6,8 +6,11 @@ const getById = (id) => Collection.findById(id);
 
 const update = (id, dto) => Collection.findByIdAndUpdate(id, dto);
 
+const getAll = () => Collection.find({});
+
 module.exports = {
     create,
     getById,
     update,
+    getAll,
 };
