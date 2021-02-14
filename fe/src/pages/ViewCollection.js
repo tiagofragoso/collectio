@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import ItemCard from "../components/ItemCard";
+
 export const ViewCollection = (props) => {
 
 	const [loading, setLoading] = useState(true);
@@ -32,9 +34,12 @@ export const ViewCollection = (props) => {
 		<div>
 		{ loading && <p>loading</p> }
 		{ error && <p>error</p> }
-		{!loading && !error && data && <div>
+		{!loading && !error && data && 
+			<div>
 				<h2>{data.name}</h2>
-				{data.items.map(({label, url}, index) => <p key={index}>{index+1}. <a href={url}>{label}</a></p>)}
+				<div>
+					{data.items.map((item, index) => <ItemCard key={index} index={index+1} item={item} />)}
+				</div>
 			</div>
 		}
 		</div>
