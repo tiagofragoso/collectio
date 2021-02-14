@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import ItemCard from "../components/ItemCard";
+import {formatDate} from "../utils/date";
 
 export const ViewCollection = (props) => {
 
@@ -37,6 +38,10 @@ export const ViewCollection = (props) => {
 		{!loading && !error && data && 
 			<div>
 				<h2>{data.name}</h2>
+				<div>
+					<span>Created at {formatDate(data.createdAt)} | </span>
+					<span>Last update {formatDate(data.updatedAt)} </span>
+				</div>
 				<div>
 					{data.items.map((item, index) => <ItemCard key={index} index={index+1} item={item} />)}
 				</div>
