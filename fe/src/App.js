@@ -3,7 +3,7 @@ import React from "react";
 import AppRouter from "./AppRouter";
 
 const App = () => (
-  <AppRouter />
-)
+    <AppRouter />
+);
 
 export default App;
