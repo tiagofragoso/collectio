@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { createUseStyles } from "react-jss";
 import Microlink from "@microlink/react";
 import styled from "styled-components";
@@ -29,6 +30,14 @@ export const ItemCard = ({ _index, item }) => {
             <span className={classes.itemLabel}>{item.label}</span>
         </div>
     );
+};
+
+ItemCard.propTypes = {
+    _index: PropTypes.number.isRequired,
+    item: PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+    }),
 };
 
 export default ItemCard;

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { createUseStyles } from "react-jss";
 
 import Header from "./Header";
@@ -16,7 +17,6 @@ const useStyles = createUseStyles({
     },
 });
 
-
 export const PageLayout = ({ children }) => {
     const classes = useStyles();
     return (
@@ -28,6 +28,10 @@ export const PageLayout = ({ children }) => {
             <Footer />
         </div>
     );
+};
+
+PageLayout.propTypes = {
+    children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]).isRequired,
 };
 
 export default PageLayout;

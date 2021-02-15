@@ -1,36 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 
 import PageLayout from "../components/PageLayout";
 import ItemCard from "../components/ItemCard";
 import { formatDate } from "../utils/date";
+import useGetCollection from "../hooks/getCollection";
 
-export const ViewCollection = (props) => {
+export const ViewCollection = ({ id }) => {
 
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
-    const [data, setData] = useState({});
-
-    const url = `${process.env.REACT_APP_API_URL}/collections/${props.id}`;
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await fetch(url);
-                if (res.status !== 200) {
-                    setError(true);
-                    setLoading(false);
-                    return;
-                }
-                setData(await res.json());
-                setLoading(false);
-            } catch (err) {
-                console.error(err);
-                setError(true);
-                setLoading(false);
-            }
-        };
-        fetchData();
-    }, [url]);
+    const [data, loading, error] = useGetCollection(id);
 
     return (
         <PageLayout>
@@ -43,12 +21,20 @@ export const ViewCollection = (props) => {
                     <span>Created at {formatDate(data.createdAt)}</span>
                 </div>
                 <div>
-                    {data.items.map((item, index) => <ItemCard key={index} index={index + 1} item={item} />)}
+                    {data.items.map((item, index) => <ItemCard key={index} _index={index + 1} item={item} />)}
                 </div>
             </div>
             }
         </PageLayout>
     );
+};
+
+ViewCollection.propTypes = {
+    id: PropTypes.string.isRequired,
+};
+
+ViewCollection.defaultProps = {
+    id: "",
 };
 
 export default ViewCollection;
