@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import PageLayout from "../components/PageLayout";
 import ItemCard from "../components/ItemCard";
 import {formatDate} from "../utils/date";
 
@@ -32,22 +33,21 @@ export const ViewCollection = (props) => {
 	}, [url]);
 	
 	return (
-		<div>
+		<PageLayout>
 		{ loading && <p>loading</p> }
 		{ error && <p>error</p> }
 		{!loading && !error && data && 
 			<div>
 				<h2>{data.name}</h2>
 				<div>
-					<span>Created at {formatDate(data.createdAt)} | </span>
-					<span>Last update {formatDate(data.updatedAt)} </span>
+					<span>Created at {formatDate(data.createdAt)}</span>
 				</div>
 				<div>
 					{data.items.map((item, index) => <ItemCard key={index} index={index+1} item={item} />)}
 				</div>
 			</div>
 		}
-		</div>
+		</PageLayout>
 	);
 }
 
