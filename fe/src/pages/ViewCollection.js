@@ -1,29 +1,41 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { createUseStyles } from "react-jss";
 
 import PageLayout from "../components/PageLayout";
 import ItemCard from "../components/ItemCard";
 import { formatDate } from "../utils/date";
 import useGetCollection from "../hooks/getCollection";
 
+const useStyles = createUseStyles({
+    title: {
+        marginBottom: 0,
+    },
+    subtitle: {
+        marginBottom: "1em",
+    },
+});
+
 export const ViewCollection = ({ id }) => {
-
-    const [data, loading, error] = useGetCollection(id);
-
+    const classes = useStyles();
+    const [collection, loading, error] = useGetCollection(id);
     return (
         <PageLayout>
             { loading && <p>loading</p> }
             { error && <p>error</p> }
-            {!loading && !error && data &&
-            <div>
-                <h2>{data.name}</h2>
-                <div>
-                    <span>Created at {formatDate(data.createdAt)}</span>
+            {!loading && !error && collection &&
+            <article>
+                <h2 className={classes.title}>{collection.name}</h2>
+                <div className={classes.subtitle}>
+                    <small>
+                        {collection.items.length} item{collection.items.length > 1 ? "s" : ""} |
+                        Created at {formatDate(collection.createdAt)}
+                    </small>
                 </div>
-                <div>
-                    {data.items.map((item, index) => <ItemCard key={index} _index={index + 1} item={item} />)}
-                </div>
-            </div>
+                <section>
+                    {collection.items.map((item, index) => <ItemCard key={index} _index={index + 1} item={item} />)}
+                </section>
+            </article>
             }
         </PageLayout>
     );

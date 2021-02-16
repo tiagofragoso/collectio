@@ -10,7 +10,7 @@ const useStyles = createUseStyles({
         flexDirection: "column",
         borderRadius: "5px",
         backgroundColor: "#e1e8ed",
-        maxWidth: "500px",
+        // maxWidth: "500px",
         marginBottom: "1em",
     },
     itemLabel: {
@@ -19,14 +19,16 @@ const useStyles = createUseStyles({
 });
 
 const StyledML = styled(Microlink)`
-border-radius: 5px`;
+border-radius: 5px;
+max-width: 100%;
+`;
 
 export const ItemCard = ({ _index, item }) => {
     const classes = useStyles();
 
     return (
         <div className={classes.itemCard}>
-            <StyledML url={item.url} size="small" lazy/>
+            <StyledML url={item.url} size="small" lazy />
             <span className={classes.itemLabel}>{item.label}</span>
         </div>
     );
