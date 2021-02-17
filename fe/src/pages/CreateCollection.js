@@ -1,12 +1,28 @@
 import React from "react";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { navigate } from "@reach/router";
+import { Header, Form, List } from "semantic-ui-react";
+import { createUseStyles } from "react-jss";
 
-import PageLayout from "../components/PageLayout";
+import PageLayout from "../components/common/PageLayout";
+import ItemCard from "../components/create/ItemCard";
+import NSIconButton from "../components/common/NSIconButton";
+
+const useStyles = createUseStyles({
+    actions: {
+        marginTop: "1em",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+});
 
 export const CreateCollection = () => {
-    const { register, control, handleSubmit } = useForm({
+    const classes = useStyles();
+
+    const { control, handleSubmit } = useForm({
         defaultValues: {
+            name: "",
             items: [{ label: "", url: "" }],
         },
     });
@@ -20,7 +36,7 @@ export const CreateCollection = () => {
 
     const onSubmit = async (data) => {
         const res = await fetch(url, {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -35,50 +51,47 @@ export const CreateCollection = () => {
 
     return (
         <PageLayout>
-            <h2>
+            <Header size="huge">
                 New collection
-            </h2>
+            </Header>
             <section>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <input
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                    <Controller
+                        control={control}
                         name="name"
-                        placeholder="My collection"
-                        ref={register()}
+                        render={({ name, value, onChange }) => (
+                            <Form.Input
+                                name={name}
+                                value={value}
+                                onChange={onChange}
+                                label="Name"
+                                placeholder="My collection"
+                            />
+                        )}
                     />
                     <section>
-                        <h4>Items</h4>
-                        <ul>
+                        <Header size="medium">Items</Header>
+                        <List>
                             {fields.map((item, index) => (
-                                <li key={item.id}>
-                                    <input
-                                        name={`items[${index}].label`}
-                                        placeholder="label"
-                                        ref={register()}
-                                    />
-                                    <input
-                                        name={`items[${index}].url`}
-                                        placeholder="url"
-                                        ref={register()}
-                                    />
-                                    <button type="button" onClick={() => remove(index)}>
-                                        x
-                                    </button>
-                                </li>
+                                <ItemCard
+                                    key={index}
+                                    item={item}
+                                    index={index}
+                                    control={control}
+                                    remove={remove}
+                                />
                             ))}
-                        </ul>
+                        </List>
                     </section>
-                    <section>
-                        <button
-                            type="button"
-                            onClick={() => {
+                    <section className={classes.actions}>
+                        <NSIconButton
+                            icon="add" onClick={() => {
                                 append({ label: "", url: "" });
                             }}
-                        >
-                            +
-                        </button>
-                        <input type="submit" />
+                        />
+                        <Form.Button content="Submit" />
                     </section>
-                </form>
+                </Form>
             </section>
         </PageLayout>
     );

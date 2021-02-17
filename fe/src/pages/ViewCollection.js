@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { createUseStyles } from "react-jss";
 
-import PageLayout from "../components/PageLayout";
-import ItemCard from "../components/ItemCard";
+import PageLayout from "../components/common/PageLayout";
+import ItemCard from "../components/view/ItemCard";
 import { formatDate } from "../utils/date";
 import useGetCollection from "../hooks/getCollection";
 
