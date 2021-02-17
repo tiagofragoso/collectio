@@ -1,5 +1,6 @@
 import React from "react";
 import { createUseStyles } from "react-jss";
+import { Link } from "@reach/router";
 
 const useStyles = createUseStyles({
     navbar: {
@@ -14,6 +15,8 @@ const useStyles = createUseStyles({
     logoText: {
         fontSize: "1.5rem",
         letterSpacing: "2px",
+        textDecoration: "none",
+        color: "white",
     },
 });
 
@@ -21,9 +24,9 @@ export const Header = () => {
     const classes = useStyles();
     return (
         <header className={classes.navbar}>
-            <span className={`${classes.logoText} no-select`}>
+            <Link to="/" className={`${classes.logoText} no-select`}>
                 <b>collect.</b>io
-            </span>
+            </Link>
         </header>
     );
 };
