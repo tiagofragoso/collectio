@@ -103,9 +103,14 @@ export const ItemCard = ({ item, index, control, remove }) => {
                         )}
                     />
                 </Form.Group>
-                <div className={classes.right}>
-                    <Button className={classes.closeBtn} circular compact size="mini" icon="close" onClick={() => remove(index)} />
-                </div>
+                {remove &&
+                <Button
+                    circular compact
+                    type="button"
+                    className={classes.closeBtn}
+                    size="mini" icon="close" onClick={() => remove(index)}
+                />
+                }
             </div>
         </List.Item>
     );
@@ -115,7 +120,7 @@ ItemCard.propTypes = {
     item: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
     control: PropTypes.object.isRequired,
-    remove: PropTypes.func.isRequired,
+    remove: PropTypes.func,
 };
 
 export default ItemCard;

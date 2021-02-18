@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { navigate } from "@reach/router";
-import { Header, Form, List, Button } from "semantic-ui-react";
+import { Header, Form, List, Button, Input } from "semantic-ui-react";
 import { createUseStyles } from "react-jss";
 
 import PageLayout from "../components/common/PageLayout";
@@ -66,13 +66,16 @@ export const CreateCollection = () => {
                         control={control}
                         name="name"
                         render={({ name, value, onChange }) => (
-                            <Form.Input
-                                name={name}
-                                value={value}
-                                onChange={onChange}
-                                label="Name"
-                                placeholder="My collection"
-                            />
+                            <Form.Field>
+                                <label>Name</label>
+                                <Input
+                                    name={name}
+                                    value={value}
+                                    onChange={onChange}
+                                    size="big"
+                                    placeholder="My collection"
+                                />
+                            </Form.Field>
                         )}
                     />
                     <section>
@@ -84,7 +87,7 @@ export const CreateCollection = () => {
                                     item={item}
                                     index={index}
                                     control={control}
-                                    remove={remove}
+                                    remove={fields.length > 1 ? remove : undefined}
                                 />
                             ))}
                         </List>
