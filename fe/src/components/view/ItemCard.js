@@ -23,12 +23,18 @@ border-radius: 5px;
 max-width: 100%;
 `;
 
-export const ItemCard = ({ _index, item }) => {
+const sizeMap = Object.freeze({
+    small: "small",
+    medium: "normal",
+    large: "large",
+});
+
+export const ItemCard = ({ _index, item, size }) => {
     const classes = useStyles();
 
     return (
         <div className={classes.itemCard}>
-            <StyledML url={item.url} size="small" lazy />
+            <StyledML url={item.url} size={sizeMap[size]} lazy />
             <span className={classes.itemLabel}>{item.label}</span>
         </div>
     );
@@ -40,6 +46,7 @@ ItemCard.propTypes = {
         label: PropTypes.string.isRequired,
         url: PropTypes.string.isRequired,
     }),
+    size: PropTypes.oneOf(["small", "medium", "large"]).isRequired,
 };
 
 export default ItemCard;
