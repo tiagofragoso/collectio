@@ -1,12 +1,11 @@
 import React from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { navigate } from "@reach/router";
-import { Header, Form, List } from "semantic-ui-react";
+import { Header, Form, List, Button } from "semantic-ui-react";
 import { createUseStyles } from "react-jss";
 
 import PageLayout from "../components/common/PageLayout";
 import ItemCard from "../components/create/ItemCard";
-import NSIconButton from "../components/common/NSIconButton";
 
 const useStyles = createUseStyles({
     actions: {
@@ -84,7 +83,8 @@ export const CreateCollection = () => {
                         </List>
                     </section>
                     <section className={classes.actions}>
-                        <NSIconButton
+                        <Button
+                            type="button"
                             icon="add" onClick={() => {
                                 append({ label: "", url: "" });
                             }}
