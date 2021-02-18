@@ -12,14 +12,21 @@ const useStyles = createUseStyles({
         marginTop: "1em",
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "flex-end",
+    },
+    addBtn: {
+        border: "1px dashed rgba(0,0,0,0.6)!important",
+        boxShadow: "none!important",
+        "&:hover": {
+            border: "1px solid!important",
+        },
     },
 });
 
 export const CreateCollection = () => {
     const classes = useStyles();
 
-    const { control, handleSubmit } = useForm({
+    const { control, handleSubmit, reset } = useForm({
         defaultValues: {
             name: "",
             items: [{ label: "", url: "" }],
@@ -82,14 +89,23 @@ export const CreateCollection = () => {
                             ))}
                         </List>
                     </section>
+                    <Button
+                        className={classes.addBtn}
+                        basic compact fluid
+                        type="button"
+                        icon="add"
+                        content="Add item"
+                        onClick={() => {
+                            append({ label: "", url: "" });
+                        }}
+                    />
                     <section className={classes.actions}>
                         <Button
-                            type="button"
-                            icon="add" onClick={() => {
-                                append({ label: "", url: "" });
-                            }}
+                            type="button" onClick={() => {
+                                reset({ name: "", items: [{ label: "", url: "" }] });
+                            }} content="Reset"
                         />
-                        <Form.Button content="Submit" />
+                        <Form.Button primary content="Submit" />
                     </section>
                 </Form>
             </section>
