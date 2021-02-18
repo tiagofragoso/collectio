@@ -9,9 +9,10 @@ const useStyles = createUseStyles({
     page: {
         minHeight: "100vh",
         position: "relative",
+        paddingBottom: "4em",
     },
     main: {
-        padding: "12px 0px",
+        padding: "2em 0px",
         maxWidth: "768px",
         margin: "0 auto",
     },
