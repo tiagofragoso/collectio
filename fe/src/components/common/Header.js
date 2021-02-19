@@ -17,6 +17,9 @@ const useStyles = createUseStyles({
         letterSpacing: "2px",
         textDecoration: "none",
         color: "white",
+        "&:hover": {
+            color: "white",
+        },
     },
 });
 
