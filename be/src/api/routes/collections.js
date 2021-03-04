@@ -30,7 +30,11 @@ router.post("/", async (req, res, _next) => {
         res.status(201).json({ _id: r._id.toString() });
     } catch (err) {
         console.error(err);
-        res.status(400).send();
+        if (err.message) {
+            res.status(400).json({ error: err.message }).send();
+        } else {
+            res.status(400).send();
+        }
     }
 });
 
@@ -45,7 +49,11 @@ router.put("/:id", async (req, res, _next) => {
         res.status(200).json(r);
     } catch (err) {
         console.error(err);
-        res.status(400).send();
+        if (err.message) {
+            res.status(400).json({ error: err.message }).send();
+        } else {
+            res.status(400).send();
+        }
     }
 });
 
