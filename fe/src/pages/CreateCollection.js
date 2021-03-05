@@ -1,8 +1,10 @@
 import React from "react";
+import * as yup from "yup";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { navigate } from "@reach/router";
 import { Header, Form, List, Button, Input } from "semantic-ui-react";
 import { createUseStyles } from "react-jss";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import PageLayout from "../components/common/PageLayout";
 import ItemCard from "../components/create/ItemCard";
@@ -23,14 +25,24 @@ const useStyles = createUseStyles({
     },
 });
 
+const schema = yup.object().shape({
+    name: yup.string().max(75).required(),
+    items: yup.array().min(1).max(9).of(yup.object().shape({
+        label: yup.string().max(50).required(),
+        url: yup.string().required(),
+    })),
+});
+
 export const CreateCollection = () => {
     const classes = useStyles();
 
-    const { control, handleSubmit, reset } = useForm({
+    const { control, handleSubmit, reset, errors } = useForm({
         defaultValues: {
             name: "",
             items: [{ label: "", url: "" }],
         },
+        mode: "onChange",
+        resolver: yupResolver(schema),
     });
 
     const { fields, append, remove } = useFieldArray({
@@ -66,13 +78,16 @@ export const CreateCollection = () => {
                         control={control}
                         name="name"
                         render={({ name, value, onChange }) => (
-                            <Form.Field>
+                            <Form.Field
+                                error={!!errors.name}
+                            >
                                 <label>Name</label>
                                 <Input
                                     name={name}
                                     value={value}
                                     onChange={onChange}
                                     size="big"
+                                    maxLength={75}
                                     placeholder="My collection"
                                 />
                             </Form.Field>
@@ -83,6 +98,7 @@ export const CreateCollection = () => {
                         <List>
                             {fields.map((item, index) => (
                                 <ItemCard
+                                    error={errors.items ? errors.items[index] : null}
                                     key={index}
                                     item={item}
                                     index={index}

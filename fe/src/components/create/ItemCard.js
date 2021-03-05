@@ -6,7 +6,7 @@ import { List, Form, Input, Button, Icon } from "semantic-ui-react";
 
 const useStyles = createUseStyles({
     itemCard: {
-        boxShadow: "0px 0px 5px 0px rgba(176,176,176,1)",
+        boxShadow: "0px 0px 3px 0px rgba(176,176,176,1)",
         marginBottom: "1.5em",
         position: "relative",
     },
@@ -52,7 +52,7 @@ const useStyles = createUseStyles({
     },
 });
 
-export const ItemCard = ({ item, index, control, remove }) => {
+export const ItemCard = ({ item, index, control, remove, error }) => {
     const classes = useStyles();
     return (
         <List.Item key={item.id} className={classes.itemCard}>
@@ -75,13 +75,16 @@ export const ItemCard = ({ item, index, control, remove }) => {
                         name={`items[${index}].label`}
                         defaultValue={item.label}
                         render={({ name, value, onChange }) => (
-                            <Form.Field>
+                            <Form.Field
+                                error={error && error.label}
+                            >
                                 <label>Label</label>
                                 <Input
                                     className={classes.itemInput}
                                     name={name}
                                     value={value}
                                     onChange={onChange}
+                                    maxLength={50}
                                     placeholder="My label"
                                 />
                             </Form.Field>
@@ -92,14 +95,18 @@ export const ItemCard = ({ item, index, control, remove }) => {
                         name={`items[${index}].url`}
                         defaultValue={item.url}
                         render={({ name, value, onChange }) => (
-                            <Form.Input
-                                className={classes.itemInput}
-                                name={name}
-                                value={value}
-                                onChange={onChange}
-                                label="URL"
-                                placeholder="My URL"
-                            />
+                            <Form.Field
+                                error={error && error.url}
+                            >
+                                <label>URL</label>
+                                <Input
+                                    className={classes.itemInput}
+                                    name={name}
+                                    value={value}
+                                    onChange={onChange}
+                                    placeholder="My URL"
+                                />
+                            </Form.Field>
                         )}
                     />
                 </Form.Group>
@@ -121,6 +128,7 @@ ItemCard.propTypes = {
     index: PropTypes.number.isRequired,
     control: PropTypes.object.isRequired,
     remove: PropTypes.func,
+    error: PropTypes.object,
 };
 
 export default ItemCard;

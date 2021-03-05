@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const collectionSchema = new mongoose.Schema({
     "name": {
         type: String,
-        minLength: 3,
+        minLength: 1,
         maxLength: 75,
         required: true,
     },
