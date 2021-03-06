@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const URL_REGEX = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/);
+
 const collectionSchema = new mongoose.Schema({
     "name": {
         type: String,
@@ -18,6 +20,9 @@ const collectionSchema = new mongoose.Schema({
             "url": {
                 type: String,
                 required: true,
+                validate: {
+                    validator: (url) => url.match(URL_REGEX),
+                },
             },
         }],
         required: true,
