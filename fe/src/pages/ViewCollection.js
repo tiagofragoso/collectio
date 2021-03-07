@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { createUseStyles } from "react-jss";
-import { Dropdown, Icon,  Popup } from "semantic-ui-react";
+import { Dropdown, Icon, Popup, Grid } from "semantic-ui-react";
 
 import ItemCard from "../components/view/ItemCard";
 import { formatDate } from "../utils/date";
@@ -36,13 +36,13 @@ const sizeOptions = [
     },
     {
         key: "medium",
-        text: "Medium",
+        text: "List",
         value: "medium",
         icon: "th list",
     },
     {
         key: "large",
-        text: "Large",
+        text: "Grid",
         value: "large",
         icon: "grid layout",
     },
@@ -127,20 +127,26 @@ export const ViewCollection = ({ id }) => {
                             {collection.items.length} item{collection.items.length > 1 ? "s" : ""} |
                             Created at {formatDate(collection.createdAt)}
                         </p>
-                        <Dropdown
-                            inline
-                            header="adjust size"
-                            value={size}
-                            options={sizeOptions}
-                            onChange={onSizeChange}
-                            renderLabel={(item) => ({
-                                icon: item.icon,
-                            })}
-                        />
+                        <div>
+                            <span>View as </span>
+                            <Dropdown
+                                inline
+                                value={size}
+                                options={sizeOptions}
+                                onChange={onSizeChange}
+                                renderLabel={(item) => ({
+                                    icon: item.icon,
+                                })}
+                            />
+                        </div>
                     </div>
-                    <section>
-                        {collection.items.map((item, index) => <ItemCard key={index} index={index + 1} item={item} size={size} />)}
-                    </section>
+                    <Grid columns={size !== "large" ? 1 : 2}>
+                        {collection.items.map((item, index) => (
+                            <Grid.Column key={index}>
+                                <ItemCard  index={index + 1} item={item} size={size} />
+                            </Grid.Column>
+                        ))}
+                    </Grid>
                 </article>
             }
         </FetchingPageLayout>

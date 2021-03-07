@@ -7,7 +7,7 @@ import styled from "styled-components";
 const useStyles = createUseStyles({
     itemCard: {
         boxShadow: "0px 0px 3px 0px rgba(176,176,176,1)",
-        marginBottom: "1.5em",
+        // marginBottom: "1.5em",
         display: "flex",
         flexDirection: "column",
     },
