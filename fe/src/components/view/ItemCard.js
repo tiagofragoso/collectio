@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { createUseStyles } from "react-jss";
 import Microlink from "@microlink/react";
-import styled from "styled-components";
 
 const useStyles = createUseStyles({
     itemCard: {
@@ -30,11 +29,6 @@ const useStyles = createUseStyles({
     },
 });
 
-const StyledML = styled(Microlink)`
-max-width: 100%;
-border: 0;
-`;
-
 const sizeMap = Object.freeze({
     small: "small",
     medium: "normal",
@@ -53,7 +47,7 @@ export const ItemCard = ({ index, item, size }) => {
                     <span className={`${classes.itemLabel} ${classes.noLabel}`}>No label</span>
                 }
             </header>
-            <StyledML url={item.url} size={sizeMap[size]} />
+            <Microlink url={item.url} size={sizeMap[size]} lazy />
         </div>
     );
 };

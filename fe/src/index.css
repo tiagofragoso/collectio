@@ -1,3 +1,11 @@
+:root {
+  --microlink-border: none;
+  --microlink-border-width: 0;
+  --microlink-color: rgba(0,0,0,.87);
+  --microlink-hover-background-color: #fafafa;
+  --microlink-max-width: 100%;
+}
+
 .no-select {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
