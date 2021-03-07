@@ -13,9 +13,7 @@ const collectionSchema = new mongoose.Schema({
         type: [{
             "label": {
                 type: String,
-                minLength: 1,
                 maxLength: 50,
-                required: true,
             },
             "url": {
                 type: String,

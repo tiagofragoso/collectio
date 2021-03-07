@@ -28,7 +28,7 @@ const useStyles = createUseStyles({
 const schema = yup.object().shape({
     name: yup.string().max(75).required(),
     items: yup.array().min(1).max(9).of(yup.object().shape({
-        label: yup.string().max(50).required(),
+        label: yup.string().max(50),
         url: yup.string().url().required(),
     })),
 });
