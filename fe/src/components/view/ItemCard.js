@@ -6,21 +6,33 @@ import styled from "styled-components";
 
 const useStyles = createUseStyles({
     itemCard: {
+        boxShadow: "0px 0px 3px 0px rgba(176,176,176,1)",
+        marginBottom: "1.5em",
         display: "flex",
         flexDirection: "column",
-        borderRadius: "5px",
-        backgroundColor: "#e1e8ed",
-        // maxWidth: "500px",
-        marginBottom: "1em",
+    },
+    cardHeader: {
+        padding: "1em",
+        display: "flex",
+        alignItems: "center",
+        borderBottom: "1px solid rgba(0,0,0,.1)",
+    },
+    itemIndex: {
+        color: "rgba(0,0,0,.5)",
+        fontWeight: "bold",
+        fontSize: "1.8rem",
     },
     itemLabel: {
-        padding: "12px 8px",
+        marginLeft: "1em",
+    },
+    noLabel: {
+        color: "rgba(0,0,0,.5)",
     },
 });
 
 const StyledML = styled(Microlink)`
-border-radius: 5px;
 max-width: 100%;
+border: 0;
 `;
 
 const sizeMap = Object.freeze({
@@ -29,19 +41,25 @@ const sizeMap = Object.freeze({
     large: "large",
 });
 
-export const ItemCard = ({ _index, item, size }) => {
+export const ItemCard = ({ index, item, size }) => {
     const classes = useStyles();
 
     return (
         <div className={classes.itemCard}>
-            <StyledML url={item.url} size={sizeMap[size]} lazy />
-            <span className={classes.itemLabel}>{item.label}</span>
+            <header className={classes.cardHeader}>
+                <span className={classes.itemIndex}>{index}</span>
+                {item.label ?
+                    <span className={classes.itemLabel}>{item.label}</span> :
+                    <span className={`${classes.itemLabel} ${classes.noLabel}`}>No label</span>
+                }
+            </header>
+            <StyledML url={item.url} size={sizeMap[size]} />
         </div>
     );
 };
 
 ItemCard.propTypes = {
-    _index: PropTypes.number.isRequired,
+    index: PropTypes.number.isRequired,
     item: PropTypes.shape({
         label: PropTypes.string.isRequired,
         url: PropTypes.string.isRequired,

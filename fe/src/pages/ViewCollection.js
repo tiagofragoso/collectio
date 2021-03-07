@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { createUseStyles } from "react-jss";
-import { Dropdown, Segment, Icon, Input, Popup } from "semantic-ui-react";
+import { Dropdown, Icon,  Popup } from "semantic-ui-react";
 
 import ItemCard from "../components/view/ItemCard";
 import { formatDate } from "../utils/date";
@@ -83,7 +83,7 @@ export const ViewCollection = ({ id }) => {
 
         setPopupTimeout(setTimeout(() => {
             setPopupIsOpen(false);
-        }, 5000));
+        }, 1000));
     };
 
     const handleClose = () => {
@@ -119,7 +119,7 @@ export const ViewCollection = ({ id }) => {
                             ref={urlInputRef}
                             onFocus={urlFocus}
                             onBlur={urlBlur}
-                            size={id.length}
+                            size={25}
                         />
                     </div>
                     <div className={classes.subtitle}>
@@ -139,7 +139,7 @@ export const ViewCollection = ({ id }) => {
                         />
                     </div>
                     <section>
-                        {collection.items.map((item, index) => <ItemCard key={index} _index={index + 1} item={item} size={size} />)}
+                        {collection.items.map((item, index) => <ItemCard key={index} index={index + 1} item={item} size={size} />)}
                     </section>
                 </article>
             }
