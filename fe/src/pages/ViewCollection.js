@@ -61,7 +61,7 @@ export const ViewCollection = ({ id }) => {
 
     const urlInputRef = useRef(null);
 
-    const url = `http://localhost:8080/${id}`;
+    const url = `${process.env.REACT_APP_URL}/${id}`;
 
     const urlFocus = () => {
         urlInputRef.current.value = url;
