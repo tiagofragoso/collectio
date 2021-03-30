@@ -1,5 +1,5 @@
 const express = require("express");
-const { PORT } = require("./config");
+const { PORT } = require("./config/dotenv");
 const loadApp = require("./loaders");
 
 const app = express();
