@@ -76,7 +76,7 @@ export const ItemCard = ({ item, index, control, remove, error }) => {
                         defaultValue={item.label}
                         render={({ name, value, onChange }) => (
                             <Form.Field
-                                error={error && error.label}
+                                error={error && !!error.label}
                             >
                                 <label>Label</label>
                                 <Input
@@ -96,7 +96,7 @@ export const ItemCard = ({ item, index, control, remove, error }) => {
                         defaultValue={item.url}
                         render={({ name, value, onChange }) => (
                             <Form.Field
-                                error={error && error.url}
+                                error={error && !!error.url}
                             >
                                 <label>URL</label>
                                 <Input

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import * as yup from "yup";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { navigate } from "@reach/router";
-import { Header, Form, List, Button, Input } from "semantic-ui-react";
+import { Header, Form, List, Button, Input, Segment } from "semantic-ui-react";
 import { createUseStyles } from "react-jss";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -35,6 +35,8 @@ const schema = yup.object().shape({
 
 export const CreateCollection = () => {
     const classes = useStyles();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
     const { control, handleSubmit, reset, errors } = useForm({
         defaultValues: {
@@ -53,18 +55,28 @@ export const CreateCollection = () => {
     const url = `${process.env.REACT_APP_API_URL}/collections`;
 
     const onSubmit = async (data) => {
-        const res = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
-        if (res.status !== 201) {
-            return;
+        try {
+            setLoading(true);
+            const res = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+            if (res.status !== 201) {
+                setError(true);
+                setLoading(false);
+                return;
+            }
+            const { _id } = await res.json();
+            setLoading(false);
+            navigate(_id);
+        } catch (err) {
+            setLoading(false);
+            setError(true);
         }
-        const { _id } = await res.json();
-        navigate(_id);
+
     };
 
     return (
@@ -72,6 +84,7 @@ export const CreateCollection = () => {
             <Header size="huge">
                 New collection
             </Header>
+            {error && <Segment inverted color="red" secondary>An error has occurred.</Segment>}
             <section>
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <Controller
@@ -120,11 +133,12 @@ export const CreateCollection = () => {
                     />
                     <section className={classes.actions}>
                         <Button
+                            disabled={loading}
                             type="button" onClick={() => {
                                 reset({ name: "", items: [{ label: "", url: "" }] });
                             }} content="Reset"
                         />
-                        <Form.Button primary content="Submit" />
+                        <Form.Button primary content="Submit" loading={loading}/>
                     </section>
                 </Form>
             </section>
